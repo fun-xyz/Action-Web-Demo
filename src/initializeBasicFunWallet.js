@@ -47,7 +47,7 @@ const ConnectorButton = ({ index }) => {
     }>{active ? ("Unconnected") : ("Connect")} {connectorName} </button>)
 }
 
-// 💰 Our list of shiny tokens! 🪙
+// 💰 Our list of tokens! 🪙
 const tokens = ["ETH", "USDC", "stETH"]
 
 // 🚀 Let's launch our app! 🌌
@@ -104,7 +104,7 @@ export default function App() {
     setLoadings({ ...loadings, transfer: false }) // 🎉 Done transferring!
   }
 
-  // 🌱 Time to stake some ETH! Grow your assets! 🌳
+  // 🌱 Time to stake some ETH! 🌳
   const stakeEth = async () => {
     const op = await funWallet.stake(auth, await auth.getUserId(), { amount: 0.001 })
     setLoadings({ ...loadings, stakeEth: true }) // 🕒 Loading time!
@@ -113,7 +113,7 @@ export default function App() {
     setLoadings({ ...loadings, stakeEth: false }) // 🎉 Done staking!
   }
 
-  // 💧 Prefund your FunWallet and make it rain! 🌧
+  // 💧 Prefund your FunWallet! 🌧
   const prefundFunWallet = async () => {
     setLoadings({ ...loadings, prefund: true }) // 🕒 Loading time!
     const { txHash } = await fetch(`https://api.fun.xyz/demo-faucet/get-faucet?token=eth&testnet=goerli&addr=${await funWallet.getAddress()}`).then(res => res.json())
