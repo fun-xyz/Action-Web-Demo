@@ -125,7 +125,7 @@ export default function App() {
   return (
     <div className="App">
       <h1>Swap, Transfer, and Stake with a FunWallet</h1>
-      1. Connect Metamask.
+      1. &ensp;
       <ConnectorButton key={0} index={0} ></ConnectorButton>
       {
         active ?
@@ -137,8 +137,8 @@ export default function App() {
       <br></br>
       <br></br>
 
-      2. Initialize the FunWallet and Auth object.
-      <button onClick={initializeSingleAuthFunAccount}>Initialize FunWallet</button>
+      2. &ensp;
+      <button onClick={initializeSingleAuthFunAccount}>Initialize the FunWallet and Auth object.</button>
       {account ?
         <div>
           Success! FunWallet Address: {account}
@@ -148,8 +148,8 @@ export default function App() {
       <br></br>
       <br></br>
 
-      3. Add test ETH to the FunWallet.
-      <button onClick={prefundFunWallet} >Add Funds</button>
+      3. &ensp;
+      <button onClick={prefundFunWallet} >Add test ETH to the FunWallet.</button>
       {loadings.prefund ?
         <div>
           Loading...
@@ -167,7 +167,7 @@ export default function App() {
       {funWallet && <>Wallet balance: {tokens.map(token => (<div key={token}>&emsp;{balance[token] ?? 0} {token} < br /></div>))}   <br></br>
         <br></br></>}
 
-      4. Swap 0.001 ETH to USDC with a FunWallet.<button onClick={swapEth} >Swap</button>
+      4. &ensp;<button onClick={swapEth} >Swap 0.001 ETH to USDC with a FunWallet.</button>
       {loadings.swap &&
         <div>
           Loading...
@@ -182,7 +182,7 @@ export default function App() {
       <br></br>
       <br></br>
 
-      5. Transfer 0.001 ETH with a FunWallet.<button onClick={transferEth} >Transfer </button>
+      5. &ensp;<button onClick={transferEth} >Transfer 0.001 ETH with a FunWallet. </button>
       {loadings.transfer ?
         <div>
           Loading...
@@ -198,7 +198,7 @@ export default function App() {
       <br></br>
       <br></br>
 
-      6. Stake 0.001 ETH to Lido with a FunWallet.<button onClick={stakeEth} >Stake </button>
+      6. &ensp;<button onClick={stakeEth} >Stake 0.001 ETH to Lido with a FunWallet.</button>
       {loadings.stakeEth ?
         <div>
           Loading...
