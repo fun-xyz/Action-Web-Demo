@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { Token } from "@fun-xyz/core";
 
-// 🌟 Setting up our default FUN wallet configuration! 🎩✨
+// Setting up our default fun wallet configuration
 const DEFAULT_FUN_WALLET_CONFIG = {
   apiKey: "hnHevQR0y394nBprGrvNx4HgoZHUwMet5mXTOBhf",
   chain: Goerli,
@@ -21,18 +21,17 @@ const DEFAULT_FUN_WALLET_CONFIG = {
   }
 };
 
-// 🌐 Our trusty connectors! 🌍
+// Setting up our default connectors
 const DEFAULT_CONNECTORS = [
   MetamaskConnector(),
 ];
 
-// 🛠 Let's configure our FUN store! 🎊
+// Configuring our FunStore
 configureNewFunStore({
   config: DEFAULT_FUN_WALLET_CONFIG,
   connectors: DEFAULT_CONNECTORS,
 });
 
-// 🖲 The button that lets us connect or disconnect! 🎮
 const ConnectorButton = ({ index }) => {
   const { active, activate, deactivate, connectorName, connector } = useConnector({ index });
 
@@ -47,21 +46,21 @@ const ConnectorButton = ({ index }) => {
     }>{active ? ("Unconnected") : ("Connect")} {connectorName} </button>)
 }
 
-// 💰 Our list of tokens! 🪙
+// Our list of tokens
 const tokens = ["ETH", "USDC", "stETH"]
 
-// 🚀 Let's launch our app! 🌌
 export default function App() {
   const { account: connectorAccount, active } = useConnector({ index: 0, autoConnect: true });
   const { account, initializeFunAccount, funWallet } = useCreateFun()
   const { Chain } = useNetwork({ chain: Goerli })
 
-  // 🔄 Keeping track of our transaction states and balances! 📊
+
+  // Keeping track of our transaction states and balances
   const [txIds, setTxIds] = useState({})
   const [loadings, setLoadings] = useState({})
   const [balance, setBalance] = useState({})
 
-  // 🤖 Automatically fetch balances when things change! 🔄
+  // Automatically fetch balances when things change
   useEffect(() => {
     const getBalance = async () => {
       if (funWallet) {
@@ -78,7 +77,7 @@ export default function App() {
 
   const [auth] = usePrimaryAuth()
 
-  // 🎈 Initialize our FunWallet! 🎉
+  // Initialize our FunWallet
   const initializeSingleAuthFunAccount = async () => {
     initializeFunAccount({
       users: [{ userId: convertToValidUserId(connectorAccount) }],
@@ -86,41 +85,41 @@ export default function App() {
     }).catch()
   }
 
-  // 🔄 Swap that ETH for some USDC! 💱
+  // Swap ETH for USDC
   const swapEth = async () => {
     const op = await funWallet.swap(auth, await auth.getUserId(), { tokenIn: "eth", tokenOut: "usdc", inAmount: 0.001 })
-    setLoadings({ ...loadings, swap: true }) // 🕒 Loading time!
+    setLoadings({ ...loadings, swap: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
     setTxIds({ ...txIds, swap: receipt.txId })
     setLoadings({ ...loadings, swap: false }) // 🎉 Done swapping!
   }
 
-  // 🚀 Let's transfer some ETH! 💸
+  // Let's transfer some ETH
   const transferEth = async () => {
     const op = await funWallet.transfer(auth, await auth.getUserId(), { token: "eth", to: await auth.getAddress(), amount: 0.001 })
-    setLoadings({ ...loadings, transfer: true }) // 🕒 Loading time!
+    setLoadings({ ...loadings, transfer: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
     setTxIds({ ...txIds, transfer: receipt.txId })
-    setLoadings({ ...loadings, transfer: false }) // 🎉 Done transferring!
+    setLoadings({ ...loadings, transfer: false })
   }
 
-  // 🌱 Time to stake some ETH! 🌳
+  // Time to stake some ETH
   const stakeEth = async () => {
     const op = await funWallet.stake(auth, await auth.getUserId(), { amount: 0.001 })
-    setLoadings({ ...loadings, stakeEth: true }) // 🕒 Loading time!
+    setLoadings({ ...loadings, stakeEth: true })
     const receipt = await funWallet.executeOperation(auth, op)
     setTxIds({ ...txIds, stakeEth: receipt.txId })
-    setLoadings({ ...loadings, stakeEth: false }) // 🎉 Done staking!
+    setLoadings({ ...loadings, stakeEth: false })
   }
 
-  // 💧 Prefund your FunWallet! 🌧
+  // Prefund your FunWallet
   const prefundFunWallet = async () => {
-    setLoadings({ ...loadings, prefund: true }) // 🕒 Loading time!
+    setLoadings({ ...loadings, prefund: true })
     const { txHash } = await fetch(`https://api.fun.xyz/demo-faucet/get-faucet?token=eth&testnet=goerli&addr=${await funWallet.getAddress()}`).then(res => res.json())
     const client = await Chain.getClient()
     await client.waitForTransactionReceipt({ hash: txHash })
     setTxIds({ ...txIds, prefund: txHash })
-    setLoadings({ ...loadings, prefund: false }) // 🎉 Done prefunding!
+    setLoadings({ ...loadings, prefund: false })
   }
 
   return (
