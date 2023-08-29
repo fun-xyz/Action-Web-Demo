@@ -8,9 +8,9 @@ import {
   Goerli,
   usePrimaryAuth,
   useNetwork,
-} from "@fun-xyz/react";
+} from "@funkit/react";
 import { useEffect, useState } from "react";
-import { Token } from "@fun-xyz/core";
+import { Token, sendGetRequest } from "@funkit/core";
 
 // Setting up our default fun wallet configuration
 const DEFAULT_FUN_WALLET_CONFIG = {
@@ -91,55 +91,55 @@ export default function App() {
 
   // Swap ETH for USDC
   const swapEth = async () => {
-    if (!connectorAccount) {
+    if (!funWallet) {
       console.log("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.swap(auth, await auth.getUserId(), { tokenIn: "eth", tokenOut: "usdc", inAmount: 0.001 })
     setLoadings({ ...loadings, swap: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
-    setTxIds({ ...txIds, swap: receipt.txId })
     setLoadings({ ...loadings, swap: false }) // 🎉 Done swapping!
+    setTxIds({ ...txIds, swap: receipt.txId })
   }
 
   // Let's transfer some ETH
   const transferEth = async () => {
-    if (!connectorAccount) {
+    if (!funWallet) {
       console.log("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.transfer(auth, await auth.getUserId(), { token: "eth", to: await auth.getAddress(), amount: 0.001 })
     setLoadings({ ...loadings, transfer: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
-    setTxIds({ ...txIds, transfer: receipt.txId })
     setLoadings({ ...loadings, transfer: false })
+    setTxIds({ ...txIds, transfer: receipt.txId })
   }
 
   // Time to stake some ETH
   const stakeEth = async () => {
-    if (!connectorAccount) {
+    if (!funWallet) {
       console.log("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.stake(auth, await auth.getUserId(), { amount: 0.001 })
     setLoadings({ ...loadings, stakeEth: true })
     const receipt = await funWallet.executeOperation(auth, op)
-    setTxIds({ ...txIds, stakeEth: receipt.txId })
     setLoadings({ ...loadings, stakeEth: false })
+    setTxIds({ ...txIds, stakeEth: receipt.txId })
   }
 
   // Prefund your FunWallet
   const prefundFunWallet = async () => {
-    if (!connectorAccount) {
+    if (!funWallet) {
       console.log("Please connect your wallet first!")
       return;
     }
     setLoadings({ ...loadings, prefund: true })
-    const { txHash } = await fetch(`https://api.fun.xyz/demo-faucet/get-faucet?token=eth&testnet=goerli&addr=${await funWallet.getAddress()}`).then(res => res.json())
+    const { txHash } = await sendGetRequest("https://api.fun.xyz", `demo-faucet/get-faucet?token=eth&testnet=goerli&addr=${await funWallet.getAddress()}`, DEFAULT_FUN_WALLET_CONFIG.apiKey)
     const client = await Chain.getClient()
     await client.waitForTransactionReceipt({ hash: txHash })
-    setTxIds({ ...txIds, prefund: txHash })
     setLoadings({ ...loadings, prefund: false })
+    setTxIds({ ...txIds, prefund: txHash })
   }
 
   return (
