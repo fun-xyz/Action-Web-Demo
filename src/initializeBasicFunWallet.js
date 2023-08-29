@@ -79,6 +79,10 @@ export default function App() {
 
   // Initialize our FunWallet
   const initializeSingleAuthFunAccount = async () => {
+    if (!connectorAccount) {
+      console.log("Please connect your wallet first!")
+      return;
+    }
     initializeFunAccount({
       users: [{ userId: convertToValidUserId(connectorAccount) }],
       index: 214
@@ -87,6 +91,10 @@ export default function App() {
 
   // Swap ETH for USDC
   const swapEth = async () => {
+    if (!connectorAccount) {
+      console.log("Please connect your wallet first!")
+      return;
+    }
     const op = await funWallet.swap(auth, await auth.getUserId(), { tokenIn: "eth", tokenOut: "usdc", inAmount: 0.001 })
     setLoadings({ ...loadings, swap: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
@@ -96,6 +104,10 @@ export default function App() {
 
   // Let's transfer some ETH
   const transferEth = async () => {
+    if (!connectorAccount) {
+      console.log("Please connect your wallet first!")
+      return;
+    }
     const op = await funWallet.transfer(auth, await auth.getUserId(), { token: "eth", to: await auth.getAddress(), amount: 0.001 })
     setLoadings({ ...loadings, transfer: true }) // 
     const receipt = await funWallet.executeOperation(auth, op)
@@ -105,6 +117,10 @@ export default function App() {
 
   // Time to stake some ETH
   const stakeEth = async () => {
+    if (!connectorAccount) {
+      console.log("Please connect your wallet first!")
+      return;
+    }
     const op = await funWallet.stake(auth, await auth.getUserId(), { amount: 0.001 })
     setLoadings({ ...loadings, stakeEth: true })
     const receipt = await funWallet.executeOperation(auth, op)
@@ -114,6 +130,10 @@ export default function App() {
 
   // Prefund your FunWallet
   const prefundFunWallet = async () => {
+    if (!connectorAccount) {
+      console.log("Please connect your wallet first!")
+      return;
+    }
     setLoadings({ ...loadings, prefund: true })
     const { txHash } = await fetch(`https://api.fun.xyz/demo-faucet/get-faucet?token=eth&testnet=goerli&addr=${await funWallet.getAddress()}`).then(res => res.json())
     const client = await Chain.getClient()
