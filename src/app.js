@@ -80,7 +80,7 @@ export default function App() {
   // Initialize our FunWallet
   const initializeSingleAuthFunAccount = async () => {
     if (!connectorAccount) {
-      console.log("Please connect your wallet first!")
+      alert("Please connect your wallet first!")
       return;
     }
     initializeFunAccount({
@@ -92,7 +92,7 @@ export default function App() {
   // Swap ETH for USDC
   const swapEth = async () => {
     if (!funWallet) {
-      console.log("Please connect your wallet first!")
+      alert("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.swap(auth, await auth.getUserId(), { tokenIn: "eth", tokenOut: "usdc", inAmount: 0.001 })
@@ -105,7 +105,7 @@ export default function App() {
   // Let's transfer some ETH
   const transferEth = async () => {
     if (!funWallet) {
-      console.log("Please connect your wallet first!")
+      alert("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.transfer(auth, await auth.getUserId(), { token: "eth", to: await auth.getAddress(), amount: 0.001 })
@@ -118,7 +118,7 @@ export default function App() {
   // Time to stake some ETH
   const stakeEth = async () => {
     if (!funWallet) {
-      console.log("Please connect your wallet first!")
+      alert("Please connect your wallet first!")
       return;
     }
     const op = await funWallet.stake(auth, await auth.getUserId(), { amount: 0.001 })
@@ -131,7 +131,7 @@ export default function App() {
   // Prefund your FunWallet
   const prefundFunWallet = async () => {
     if (!funWallet) {
-      console.log("Please connect your wallet first!")
+      alert("Please connect your wallet first!")
       return;
     }
     setLoadings({ ...loadings, prefund: true })
