@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+button,
+div {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+h3 {
+  margin-top: 7px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #777;
+  font-size: 16px;
+}
+
+p {
+  font-size: 14px;
+}
+
+.upNext h3 {
+  color: #111;
+}
+
+.done h3 {
+  color: #555;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  gap: 12px;
+}
+
+li .progressionPath {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li .stepIndicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  border: 2px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+li .stepIndicator.blue {
+  border-color: #465ceb;
+  color: #465ceb;
+}
+
+li .stepIndicator.green {
+  background-color: #0ab261;
+  border-color: #0ab261;
+}
+
+li .verticalLine {
+  width: 2px;
+  flex: 1;
+  margin-block: 2px;
+}
+
+li .verticalLine.blue {
+  background-color: #465ceb;
+}
+
+li .verticalLine.green {
+  background-color: #0ab261;
+}
+
+button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1.5px solid #333;
+  background-color: white;
+  margin-block: 5px;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button p {
+  /* color: #ddd; */
+  margin: 0;
+  font-weight: 500;
+}
+
+button:not(.disabled):hover {
+  transform: scale(1.05);
+}
+
+button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.loadingIndicator {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #888;
+  background-color: white;
+  width: 90vw;
+  height: 90vh;
+  max-width: 475px;
+  max-height: 650px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+a {
+  color: #465ceb;
+}
+
+a:hover {
+  text-decoration: underline;
+}
